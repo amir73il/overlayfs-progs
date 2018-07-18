@@ -26,6 +26,13 @@
 #define OVL_WORK	2
 #define OVL_PTYPE_MAX	3
 
+/* overlayfs on-disk format */
+#define OVL_FS_V1		0	/* feature set are not necessary */
+#define OVL_FS_UPPER_V2 	1	/* feature set are necessary for upper layer */
+#define OVL_FS_V2		2	/* feature set are necessary for all layers */
+
+#define OVL_LAYER_V1	0
+#define OVL_LAYER_V2	1
 
 struct ovl_config {
 	char *lowerdir;
@@ -34,6 +41,7 @@ struct ovl_config {
 	bool redirect_dir;
 	bool index;
 	bool nfs_export;
+	int format;
 };
 
 /* Information for each underlying layer */
@@ -46,6 +54,7 @@ struct ovl_layer {
 	__u64 compat;		/* compatible features */
 	__u64 ro_compat;	/* read-only compatible features */
 	__u64 incompat;		/* incompatible features */
+	int format;		/* layer on-disk format, v1 or v2 */
 };
 
 /* Information for the whole overlay filesystem */
