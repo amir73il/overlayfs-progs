@@ -210,6 +210,15 @@ void ovl_parse_opt(char *opt, struct ovl_config *config)
 		} else if (!strncmp(p, OPT_NFS_EXPORT, strlen(OPT_NFS_EXPORT))) {
 			if ((opts = ovl_match_options(p, OPT_NFS_EXPORT)) != -1)
 				config->nfs_export = (bool)opts;
+		} else if (!strncmp(p, OPT_OVERLAYFS_V2, strlen(OPT_OVERLAYFS_V2))) {
+			p += strlen(OPT_OVERLAYFS_V2);
+
+			if (!strcmp(p, "on"))
+				config->format = OVL_FS_V2;
+			else if (!strcmp(p, "upper"))
+				config->format = OVL_FS_UPPER_V2;
+			else if (!strcmp(p, "off"))
+				config->format = OVL_FS_V1;
 		}
 	}
 }
